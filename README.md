@@ -1,2 +1,2 @@
-# M101JS-MangoDB-NodeJS-Course
-Course of the MangoDB University
+# M101JS-MongoDB-NodeJS-Course
+Course of the MongoDB University
