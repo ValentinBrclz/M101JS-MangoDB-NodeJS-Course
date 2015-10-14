@@ -1,0 +1,18 @@
+{
+  "name": "M101JS-MongoDB-NodeJS-Course",
+  "version": "0.0.2",
+  "description": "npm introduction",
+  "main": "template.js",
+  "dependencies": {},
+  "author": "Valentin Brclz",
+  "license": "GPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ValentinBrclz/M101JS-MongoDB-NodeJS-Course.git"
+  },
+  "devDependencies": {
+    "consolidate": "^0.13.1",
+    "express": "^4.13.3",
+    "mongodb": "^2.0.45"
+  }
+}
