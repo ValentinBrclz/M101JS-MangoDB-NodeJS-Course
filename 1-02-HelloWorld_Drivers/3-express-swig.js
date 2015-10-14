@@ -10,9 +10,13 @@ var express = require('express'),
     port = 8080,
     cons = require('consolidate');
 
+app.engine('html', cons.swig); // use swig
+app.set('view engine', 'html'); // set the view engine
+app.set('views', __dirname + "/views"); // where to find the views
+
 // Handle only the root
 app.get('/', function (req, res) {
-    res.send("Hello World !");
+    res.render('hello', {'name': 'Swig'}); // Call the view "hello"
 });
 
 // Handle all other routes -> 404
