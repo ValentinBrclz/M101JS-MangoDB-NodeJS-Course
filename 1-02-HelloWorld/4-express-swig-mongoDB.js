@@ -8,8 +8,8 @@
 var express = require('express'),
     app = express(),
     port = 8080,
-    cons = require('consolidate')
-MongoClient = require('mongodb').MongoClient,
+    cons = require('consolidate'),
+    MongoClient = require('mongodb').MongoClient,
     Server = require('mongodb').Server;
 
 // Html renderer
@@ -25,13 +25,13 @@ var mongoclient = new MongoClient(
         {'native_parser': true}
     )
 );
-
-// Stopped at 2:14 of the video
-// TODO finish the video
+var db = new Db('course', mongoclient);
 
 // Handle only the root
 app.get('/', function (req, res) {
-    res.render('hello', {'name': 'Swig'}); // Call the view "hello"
+    db.collection('hello_mongo_express').findOne({}, function (err, doc) {
+        res.render('hello', doc);
+    });
 });
 
 // Handle all other routes -> 404
@@ -39,6 +39,14 @@ app.get('*', function (req, res) {
     res.send("Page not found", 404);
 });
 
-// Listening
-app.listen(port);
-console.log("Express server started on port " + port)
+//----
+
+// Open DB
+db.open(function (err, mongoclient) {
+    if (err)
+        throw err;
+
+    // Listening (http)
+    app.listen(port);
+    console.log("Express server started on port " + port)
+});
