@@ -9,34 +9,30 @@ var express = require('express'),
     app = express(),
     port = 8080,
     cons = require('consolidate'),
-    MongoClient = require('mongodb').MongoClient,
-    Server = require('mongodb').Server;
+    MongoServer = require('mongodb').Server,
+    Db = require('mongodb').Db;
 
 // Html renderer
 app.engine('html', cons.swig); // use swig
 app.set('view engine', 'html'); // set the view engine
 app.set('views', __dirname + "/views"); // where to find the views
 
-// Create a MongoClient-object containing the conneection information
-var mongoclient = new MongoClient(
-    new Server(
-        'localhost',
-        27017,
-        {'native_parser': true}
-    )
-);
-var db = new Db('course', mongoclient);
+
+// Create a db-object containing the connection information
+db = new Db('course', new MongoServer('localhost', 27017, {'native_parser': true}));
 
 // Handle only the root
 app.get('/', function (req, res) {
-    db.collection('hello_mongo_express').findOne({}, function (err, doc) {
-        res.render('hello', doc);
-    });
+    db.collection('hello_mongo_express', null, function (err, collection) {
+        collection.findOne({}, function (err, doc) {
+            res.render('hello', doc);
+        });
+    })
 });
 
 // Handle all other routes -> 404
 app.get('*', function (req, res) {
-    res.send("Page not found", 404);
+    res.status(404).send("Page not found");
 });
 
 //----
