@@ -1,4 +1,3 @@
-
 // Find one document in our collection
 var doc = db.coll.findOne();
 
